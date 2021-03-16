@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .line {
+        height: 200px;
+        border: 1px solid red
+    }
+
+    .line .row {
+        background-color: red;
+        padding: 8px 18px;
+        color: #ffffff;
+        width: 100px;
+        margin: 20px auto
+    }
+
+    #demo .main-box {
+        background-color: #ffffff;
+        min-width: 360px;
+        min-height: 200px;
+        padding: 0 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between
+    }
+
+    #demo .main-box .text-wrap {
+        margin: 20px auto;
+        text-align: center
+    }
+
+    #demo .main-box .text-wrap .icons {
+        width: 46px;
+        height: 46px;
+        display: block;
+        margin: 0 auto
+    }
+
+    #demo .main-box .text-wrap .icons.success {
+        width: 46px
+    }
+
+    #demo .main-box .ope-wrap {
+        text-align: center;
+        margin: 20px auto
+    }
+
+    #target {
+        position: absolute;
+        width: 500px;
+        height: 260px;
+        /* background-color: #eeeeee; */
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        color: red;
+        border: 1px solid red;
+    }
+
+    /* #target div {
+        margin: 8px 0;
+    } */
+</style>
+
+<body>
+    <button class="mu-button mu-button-xs mu-button-plain mu-button-round text">
+        很长的按钮
+    </button>
+    <div class="text fs-xl">
+        colors
+    </div>
+    <div class="mu-switch-wrap">
+        <input type="checkbox" name="" id="">
+        <div class="mu-real-button">
+            <!-- <div class="mu-button-ball"></div> -->
+        </div>
+    </div>
+    <div id="target">
+        <div>123</div>
+        <div class="me">456</div>
+        <div>789</div>
+        <div class="mu-popup mu-loading-cover mu-loading-type-1" data-muid="317754">
+            <div class="mu-loading"></div>
+            <!-- <div class="mu-loading2">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div> -->
+            <div class="mu-loading-text">文件上传中文件上传中文件上传中...</div>
+        </div>
+    </div>
+
+    <!-- <div class="mu-loading-cover">
+        <div class="mu-loading"></div>
+    </div> -->
+    <div>
+        <div class="line">123</div>
+        <div class="line">123</div>
+        <div class="line">123</div>
+        <div class="line">123</div>
+        <div class="line">123</div>
+        <div class="line">123</div>
+    </div>
+</body>
+<!-- <div class="mu--loading-ul">
+    <div class="mu--loaidng-li"></div>
+    <div class="mu--loaidng-li"></div>
+    <div class="mu--loaidng-li"></div>
+    <div class="mu--loaidng-li"></div>
+    <div class="mu--loaidng-li"></div>
+</div> -->
+<div id="demo" style="display: none;">
+    <div class="main-box">
+        123 123 123 123 123 123 123 123 123
+    </div>
+</div>
+<!-- <div class="mu-popup mu-msg top" data-muid="786496">
+
+    <div class="mu-animate">
+        <div class="mu-content message " data-muid="955861">
+            <i class="mu-icon message"></i>
+            <span class="mu-msg">这是消息呢这是消息呢</span>
+        </div>
+
+    </div>
+    <div class="mu-content message animate" data-muid="176166" style="margin-top:15px">
+        <i class="mu-icon message"></i>
+        <span class="mu-msg">2222</span>
+
+    </div>
+    <div class="mu-content warning animate" data-muid="348604" style="margin-top:15px">
+        <i class="mu-icon warning"></i>
+        <span class="mu-msg">33333</span>
+
+    </div>
+</div> -->
+<div id="box">
+    <p>这只是一句提示</p>
+</div>
+<!-- <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script> -->
+<script src="http://wb1.planpoint.cn/2020/assets/lib/js/jquery-3.5.1.min.js"></script>
+<script>
+
+    let demo = new mu.Dialog({
+        beforeEven: function () {
+            console.log('beforeEven');
+        },
+        afterOpenEven: function () {
+            console.log('afterOpenEven');
+            $('body').on('click', '.menu-item', function () {
+                $(this).remove()
+            })
+        },
+        closeEven() {
+            console.log('closeEven');
+        }
+    })
+    // $('button').on('click', function () {
+    //     demo.msg({
+    //         type: 'primary',
+    //         content: '这是消息呢这是消息呢',
+    //         closeAble: true,
+    //         // disappear: false,
+    //         // place: 'center',
+    //     })
+    // })
+    // demo.addressing({
+    //     originDOM: '#box',
+    //     targetDOM: '.me',
+    //     offsetLeft: 10,
+    //     offsetTop: 100
+    // })
+
+
+    demo.loading({
+        targetDOM: '#target',
+        type: 2,
+        allowScroll: false,
+        content: '文件上传中文件上传中文件上传中...'
+    })
+    // setTimeout(() => {
+    //     demo.close()
+    // }, 1000);
+
+    // let demo2 = new mu.Dialog({
+    //     beforeEven: function () {
+    //         console.log(1111111);
+    //     },
+    //     afterOpenEven: function () {
+    //         console.log('middle');
+    //     },
+    //     closeEven() {
+    //         console.log('消息已关闭');
+    //     }
+    // })
+    // let demo3 = new mu.Dialog({
+    //     beforeEven: function () {
+    //         console.log(1111111);
+    //     },
+    //     afterOpenEven: function () {
+    //         console.log('middle');
+    //     },
+    //     closeEven() {
+    //         console.log('弹窗已关闭');
+    //     }
+    // })
+
+    // demo2.confirm({
+    //     // cover: true,
+    //     keyClose: true,
+    //     content: '这是消息呢这是消息呢这是消息呢这是消息呢这是消息呢这是消息呢这是消息呢',
+    //     cancel: function () {
+    //         console.log('取消了');
+    //     },
+    //     confirm: function () {
+    //         return new Promise((resolve, rej) => {
+    //             setTimeout(() => {
+    //                 console.log('处理完成，现在关闭弹窗');
+    //                 resolve()
+    //             }, 3000);
+    //         })
+    //     }
+    // })
+
+    // demo.open({
+    //     originDOM: '#demo',//目标对象
+    //     // targetDOM: '#target',
+    //     noScroll: true,//body不允许滚动
+    //     cover: true,//阴影
+    //     keyClose: true,
+    //     left: '50%',
+    //     top: '50%'
+    // })
+
+    // demo.msg({
+    //     type: 'primary',
+    //     content: '这是消息呢这是消息呢',
+    //     closeAble: true,
+    //     // disappear: false,
+    //     // place: 'center',
+    // })
+
+</script>
+
+</html>

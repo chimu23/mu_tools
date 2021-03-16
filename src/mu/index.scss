@@ -1,0 +1,308 @@
+// @import url('./mu-icon.css');
+// @import "./definition.scss";
+@keyframes scale {
+    0% {
+        opacity: 0;
+        transform: scale(.2);
+    }
+    50% {
+        transform: scale(1);
+    }
+    70% {
+        opacity: .7;
+        transform: scale(1.2);
+    }
+    80% {
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#mudialog {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    font-size: 14px;
+    font-weight: 400;
+    box-sizing: border-box;
+    div {
+        box-sizing: border-box;
+    }
+    .mu-icon {
+        font-size: 22px;
+    }
+    img {
+        width: 100%;
+        height: 100%;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: -o-crisp-edges;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+        -ms-interpolation-mode: nearest-neighbor;
+    }
+    div,
+    span {
+        &.btns {
+            display: inline-block;
+            color: #ffffff;
+            padding: 7px 18px;
+            border-radius: 3px;
+            margin: 0 10px;
+            cursor: pointer;
+            &.confirm {
+                background-color: $theme;
+            }
+            &.close {
+                background-color: $info;
+            }
+            &.border {
+                border: 1px solid #666666;
+                color: #333333;
+            }
+            &.theme {
+                background-color: $theme;
+            }
+        }
+    }
+    i {
+        font-style: normal;
+        display: inline-block;
+        &.btns {
+            position: absolute;
+            right: 18px;
+            text-align: center;
+            cursor: pointer;
+            transition: all .3s linear;
+            &.close {
+                color: #c0c4cc;
+                font-size: 13px;
+                z-index: 99;
+                &::before {
+                    font-family: "mu-icon" !important;
+                    content: "\e602";
+                }
+            }
+            &:hover {
+                transform: rotate(180deg) scale(1.5);
+                color: #333333;
+            }
+        }
+    }
+    &>.mushadow {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(33, 33, 33, .6);
+        z-index: 10;
+    }
+    &>.box-wrap {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 11;
+        .main-box {
+            width: 100%;
+            height: 100%;
+        }
+        .muimg {
+            width: 100%;
+            height: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+        // 消息弹窗
+        &.msg {
+            font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+            .mu-icon {
+                margin-right: 10px;
+            }
+            .main-box {
+                min-width: 180px;
+                animation: scale .3s linear;
+                display: flex;
+                align-items: center;
+                white-space: nowrap;
+                color: $info-t;
+                padding: 12px 0 12px 14px;
+                border-radius: 5px;
+                background-color: $info-b;
+                .btns {
+                    &.close {
+                        position: relative !important;
+                        margin-left: auto;
+                        margin-right: 2px;
+                    }
+                }
+                .msg-label {
+                    &::before {
+                        content: "\e606";
+                    }
+                }
+                &.success {
+                    color: $success-t;
+                    background-color: $success-b;
+                    .msg-label {
+                        &::before {
+                            content: "\e60b";
+                        }
+                    }
+                }
+                &.error {
+                    color: $error-t;
+                    background-color: $error-b;
+                    .msg-label {
+                        &::before {
+                            content: "\e614";
+                        }
+                    }
+                }
+                .text {
+                    margin-right: 30px;
+                }
+            }
+        }
+        // 确认弹窗
+        &.confirm {
+            .main-box {
+                animation: scale .3s linear;
+                background-color: #ffffff;
+                min-width: 360px;
+                max-width: 420px;
+                padding: 6px 16px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                box-shadow: 0 2px 12px 0 rgba(0, 160, 255, 0.2);
+                border-radius: 6px;
+                .btns {
+                    &.close {
+                        top: 12px;
+                    }
+                }
+                .title {
+                    text-align: center;
+                    line-height: 45px;
+                }
+                .text {
+                    min-height: 100px;
+                    margin-top: 6px;
+                    font-size: 15px;
+                    line-height: 28px;
+                }
+                .ope-wrap {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    height: 70px;
+                }
+            }
+        }
+        // 自定义弹窗
+        &.custom {
+            i {
+                &.btns {
+                    &.close {
+                        top: 12px;
+                    }
+                }
+            }
+            >div {
+                animation: scale .3s linear;
+                display: block !important;
+            }
+        }
+    }
+}
+
+.miniBlock {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    .box-wrap {
+        &.tips {
+            .main-box {
+                position: relative;
+                padding: 6px 12px;
+                background-color: #303133;
+                color: #ffffff;
+                border-radius: 5px;
+                font-size: 12px;
+                line-height: 20px;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    bottom: -8px;
+                    left: 20px;
+                    width: 0px;
+                    height: 0px;
+                    border-left: 8px solid transparent;
+                    border-top: 8px solid #303133;
+                    border-right: 8px solid transparent;
+                }
+            }
+        }
+        &.loading {
+            transform: translate(-50%, -50%);
+            @keyframes mu-roate {
+                0% {
+                    transform: rotate(0deg) scale(0.1);
+                }
+                25% {
+                    transform: rotate(90deg) scale(1.2);
+                }
+                50% {
+                    transform: rotate(180deg) scale(1.3);
+                }
+                75% {
+                    transform: rotate(270deg) scale(1);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+            @keyframes mu-roate-2 {
+                0% {
+                    transform: rotate(0deg);
+                }
+                25% {
+                    transform: rotate(90deg);
+                }
+                50% {
+                    transform: rotate(180deg);
+                }
+                75% {
+                    transform: rotate(270deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+            >.main-boxx {
+                text-align: center;
+                .loading {
+                    width: 32px;
+                    height: 32px;
+                    background-image: url(./mu-loading.svg);
+                    margin: 0 auto;
+                    animation: mu-roate 1s linear forwards, mu-roate-2 1.2s linear 1s infinite;
+                }
+                >.content {
+                    font-size: 16px;
+                    line-height: 48px;
+                    color: #333333;
+                }
+            }
+        }
+        &.menu {
+            position: fixed;
+        }
+    }
+}

@@ -1,0 +1,676 @@
+@import './mu-icon.css';
+@import './style.scss';
+$colors:('success':#67c23a, 'warning':#e6a23c, 'message':#909399, 'error':#f56c6c, 'primary':#13a7ff, 'theme':#E10012, 'gray':#9A9A9A);
+$bgcolors:('success':#f0f9eb, 'warning':#fdf6ec, 'message':#edf2fc, 'error':#fef0f0, 'primary':#ecf5ff, 'theme':#FFF4F5,
+    'gray':#D9D9D9);
+$dircolors:('success':#e1f3d8, 'warning':#faecd8, 'message':#ebeef5, 'error':#fde2e2, 'primary':#b3d8ff, 'theme':#b3d8ff,
+    'gray':#D9D9D9);
+$statuscolors:('default':#606266, 'active':#90d6ff, 'default-gray':#dbdfe6);
+
+//public 
+.mu-boxshadow {
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+}
+
+.mu-center-wrap {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+}
+
+// public -over
+@keyframes mu-scale {
+    0% {
+        opacity: 0;
+        transform: scale(.2);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+
+    70% {
+        opacity: .7;
+        transform: scale(1.2);
+    }
+
+    80% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes mu-closeRoate {
+    0% {
+        transform: scale(.2);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+
+    70% {
+        opacity: .7;
+        transform: scale(1.2);
+    }
+
+    80% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes mu-animate-bouncedown {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(20px);
+    }
+}
+
+@keyframes mu-animate-loading {
+    from {
+        transform: rotate(0deg);
+        opacity: .9;
+    }
+
+    to {
+        transform: rotate(360deg);
+        opacity: 1;
+    }
+}
+
+@keyframes mu-animate-loading2 {
+    0% {
+        height: 30%;
+    }
+
+    50% {
+        height: 100%;
+
+    }
+
+    100% {
+        height: 30%;
+
+    }
+}
+
+@keyframes mu-animate-loading2 {
+    0% {
+        height: 40%;
+    }
+
+    20% {
+        height: 100%;
+    }
+
+    40% {
+        height: 40%;
+    }
+
+    60% {
+        height: 40%;
+    }
+
+    80% {
+        height: 40%;
+    }
+
+    100% {
+        height: 40%;
+    }
+}
+
+// extend
+.extend-button-opacity {
+
+    // 鼠标悬浮时，按钮高亮效果
+    &:hover {
+        opacity: .8;
+    }
+
+}
+
+// extend -o
+
+.mu-popup {
+    -webkit-font-smoothing: antialiased;
+
+    .mu-BGCover {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000000;
+        opacity: .5;
+    }
+
+
+    .mu-animate {
+        animation: mu-animate-bouncedown .3s forwards;
+    }
+
+    // 即时消息 open 0
+    &.mu-msg {
+        position: fixed;
+        top: 40%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10003;
+
+        &.top {
+            // 消息框在页面顶部出现
+            top: 0;
+        }
+
+        .mu-content {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            min-width: 260px;
+            font-size: 14px;
+            padding: 13px 18px 13px 20px;
+            border-radius: 6px;
+            transition: all .3s linear;
+            white-space: nowrap;
+
+            // &.message {
+            //     color: map-get($colors, 'message');
+            //     background-color: map-get($bgcolors, 'message');
+            //     border: 1px solid map-get($dircolors, 'message');
+            // }
+
+            @each $colorKey,
+            $color in $colors {
+                &.#{$colorKey} {
+                    color: $color;
+                    background-color: map-get($bgcolors, $colorKey);
+                    border: 1px solid map-get($dircolors, $colorKey);
+                }
+            }
+
+            .mu-msg {
+                padding-left: 12px;
+                margin-right: 60px;
+            }
+
+            .mu-icon {
+                &.close {
+                    opacity: .7;
+                    margin-left: auto;
+
+                    &:hover {
+                        opacity: 1;
+                        transform: scale(1.2);
+                    }
+                }
+            }
+        }
+
+    }
+
+    // 自定义弹窗 open 2
+    &.mu-custom {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 10000;
+
+        .mu-content {
+            min-width: 30px;
+            overflow: hidden;
+            @extend .mu-boxshadow;
+            animation: mu-animate-bouncedown .4s forwards;
+
+        }
+
+        .mu-icon {
+            &.close {
+                position: absolute;
+                top: 36px;
+                right: 16px;
+                color: map-get($statuscolors, 'default');
+                transition: all .1s linear;
+                opacity: .7;
+                z-index: 1;
+
+                &:hover {
+                    color: map-get($statuscolors, 'active');
+                    transform: scale(1.2);
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    // 确认弹窗 open 1
+    &.mu-confirm {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 10001;
+
+        .mu-content {
+            animation: mu-animate-bouncedown .4s forwards;
+            background-color: #ffffff;
+            width: 380px;
+            max-width: 420px;
+            padding-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ebeef5;
+            text-align: left;
+            overflow: hidden;
+            @extend .mu-boxshadow;
+
+            .mu-title {
+                font-size: 18px;
+                padding: 15px 15px 10px;
+
+            }
+
+            .mu-content-wrap {
+                padding: 0 16px;
+                margin: 8px 0;
+                display: flex;
+            }
+
+            .mu-msg {
+                font-size: 14px;
+                color: map-get($map: $statuscolors, $key: 'default');
+                line-height: 24px;
+
+            }
+
+            .handle-btns {
+                padding: 5px 15px 0;
+                text-align: right;
+
+                button {
+                    &:first-child {
+                        margin-right: 9px;
+                    }
+                }
+            }
+
+            .mu-icon {
+                &.shock {
+                    color: #f59f34;
+                    font-size: 20px;
+                    margin: 0 8px;
+                    vertical-align: middle;
+                }
+
+                &.close {
+                    position: absolute;
+                    top: 12px;
+                    right: 13px;
+                    color: map-get($statuscolors, 'default');
+                    transition: all .1s linear;
+                    opacity: .7;
+
+                    &:hover {
+                        color: map-get($statuscolors, 'active');
+                        transform: scale(1.2);
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+
+    // loading遮罩 open 4
+    &.mu-loading-cover {
+        z-index: 1000;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+
+        cursor: wait;
+
+        // 加载类型1
+        &.mu-loading-type-1 {
+            background-color: transparent;
+
+            .mu-loading-text {
+                color: #333333;
+
+            }
+
+            .mu-loading {
+                position: relative;
+                width: 96px;
+                height: 96px;
+                border: 2px solid transparent;
+                border-top-color: map-get($map: $colors, $key: 'theme');
+                border-top-color: #d6336c;
+                border-radius: 50%;
+                animation: mu-animate-loading 1s linear infinite;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 5px;
+                    left: 4px;
+                    right: 4px;
+                    bottom: 4px;
+                    border: 2px solid transparent;
+                    // border-top-color: map-get($map: $colors, $key: 'error');
+                    border-top-color: #5c7cfa;
+                    border-radius: 50%;
+                    animation: mu-animate-loading 1.5s linear infinite;
+
+                }
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: 14px;
+                    left: 12px;
+                    right: 12px;
+                    bottom: 12px;
+                    border: 2px solid transparent;
+                    border-top-color: map-get($map: $colors, $key: 'success');
+                    border-top-color: #38d9a9;
+                    border-radius: 50%;
+                    animation: mu-animate-loading 2s linear infinite;
+
+                }
+            }
+        }
+
+        // 加载类型2
+        &.mu-loading-type-2 {
+            background-color: rgba(0, 0, 0, .7);
+
+            .mu-loading-text {
+                color: #ffffff;
+
+            }
+
+            .mu-loading2 {
+                width: 30%;
+                max-width: 180px;
+                height: 55%;
+                max-height: 200px;
+
+                .mu--loading-ul {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+
+                    .mu--loaidng-li {
+                        flex: 1;
+                        height: 40%;
+                        margin: 0 2%;
+                        background-color: #ffffff;
+
+                        &:nth-child(1) {
+                            animation: mu-animate-loading2 1.5s .3s linear infinite;
+                        }
+
+                        &:nth-child(2) {
+                            animation: mu-animate-loading2 1.5s .6s linear infinite;
+                        }
+
+                        &:nth-child(3) {
+                            animation: mu-animate-loading2 1.5s .9s linear infinite;
+                        }
+
+                        &:nth-child(4) {
+                            animation: mu-animate-loading2 1.5s 1.2s linear infinite;
+                        }
+
+                        &:nth-child(5) {
+                            animation: mu-animate-loading2 1.5s 1.5s linear infinite;
+                        }
+                    }
+                }
+            }
+        }
+
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+
+
+
+        .mu-loading-text {
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 26px;
+            letter-spacing: .1em;
+            margin: 2% 0;
+        }
+    }
+
+}
+
+// mu-icon图标定义
+i {
+    &.mu-icon {
+        &.close {
+            cursor: pointer;
+
+            &:before {
+                content: "\e602";
+            }
+        }
+
+        &.plaint {
+            &:before {
+                content: "\e636";
+            }
+        }
+
+        &.message {
+            &:before {
+                content: "\e636";
+            }
+        }
+
+        &.success {
+            &:before {
+                content: "\e636";
+            }
+        }
+
+        &.warning {
+            &:before {
+                content: "\e636";
+            }
+        }
+
+        &.error {
+            &:before {
+                content: "\e636";
+            }
+        }
+
+        &.shock {
+            &:before {
+                content: "\e605";
+            }
+        }
+    }
+}
+
+mu-icon {
+    display: inline-block;
+}
+
+// mu-style
+// 自定义按钮样式
+button {
+
+    &.mu-button {
+        -webkit-appearance: none;
+        outline: none;
+        background-color: #ffffff;
+        cursor: pointer;
+        white-space: nowrap;
+        padding: 12px 20px;
+        font-size: 14px;
+        border-radius: 4px;
+        color: #ffffff;
+        border: 1px solid transparent;
+        margin: 0;
+        line-height: 1;
+        border: 1px solid map-get($map: $colors, $key: 'gray');
+        color: map-get($map: $colors, $key: 'gray');
+
+        // &:hover {
+        //     color: map-get($map: $colors, $key: 'gray');
+        //     border-color: map-get($map: $statuscolors, $key: 'gray');
+        //     background-color: map-get($map: $bgcolors, $key: 'gray');
+        //     background-color: transparent;
+        // }
+
+        @each $colorKey,
+        $color in $colors {
+            &.mu-button-#{$colorKey} {
+                color: #ffffff;
+                background-color: map-get($map: $colors, $key: $colorKey);
+                @extend .extend-button-opacity;
+
+                &:hover {
+                    @extend .extend-button-opacity;
+                    border-color: transparent;
+                }
+
+                &.mu-button-plain {
+                    background-color: map-get($map: $bgcolors, $key:$colorKey);
+                    color: map-get($map: $colors, $key: $colorKey);
+                    border-color: map-get($map: $colors, $key: $colorKey);
+
+                    &:hover {
+                        background-color: map-get($map: $colors, $key: $colorKey);
+                        color: #ffffff;
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+
+        &.mu-button-round {
+            border-radius: 20px !important;
+            padding: 12px 23px;
+        }
+
+        &.mu-button-round {
+            border-radius: 20px;
+        }
+
+        &.mu-button-xs {
+            padding: 7px 15px;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+
+        &.mu-button-sm {
+            padding: 9px 15px;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+
+        &.mu-button-md {
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+
+        &.mu-button-lg {
+            padding: 10px 32px;
+            font-size: 14px;
+        }
+    }
+}
+
+// 开关(通过checkbox修改样式，纯css)
+.mu-switch-wrap {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 20px;
+    box-sizing: border-box;
+
+    input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        outline: none;
+        appearance: none;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+
+        &:checked {
+
+            &+.mu-real-button {
+                background-color: map-get($map: $colors, $key: 'primary');
+
+                &::after {
+                    margin-left: 20px;
+
+                }
+
+            }
+        }
+    }
+
+    .mu-real-button {
+        width: 100%;
+        height: 100%;
+        background-color: map-get($map: $statuscolors, $key: 'default-gray');
+
+        display: flex;
+        align-items: center;
+        border-radius: 20px;
+        overflow: hidden;
+
+        &::after {
+            content: "";
+            width: 16px;
+            height: 16px;
+            margin: 0 3px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            transition: all .1s linear;
+        }
+
+    }
+}
+
+// mu-style -o

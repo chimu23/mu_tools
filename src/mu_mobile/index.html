@@ -1,0 +1,177 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-01-19 16:40:04
+ * @LastEditTime: 2021-01-25 12:02:42
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \mu\src\mu_mobile\index.html
+-->
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mu_mobile</title>
+    <!-- <script src="http://wb1.planpoint.cn/2020/assets/lib/hotcss/hotcss.js"></script> -->
+    <script src="http://wb1.planpoint.cn/2020/assets/lib/hotcss/hotcss.js"></script>
+</head>
+
+<body>
+    <div class="indexPage">
+        <div class="button">show</div>
+        <div class="actionsheet">actionsheet</div>
+        <div class="marquee">
+            scrollscrollscrollscrollscrollscrollscrollscroll
+        </div>
+        <div class="a">
+            123
+        </div>
+        <div style="width: 10rem;height: 20rem;margin-left: 3rem;padding:3rem">
+            <img data-lazy="http://192.168.1.180:8080/public/aaa.jpg" alt="">
+        </div>
+        <div class="img-wrap">
+            <img data-lazy="http://192.168.1.180:8080/public/aaa1.jpg" alt="">
+        </div>
+        <div class="img-wrap" style="margin: 6rem;">
+            <img data-lazy="http://192.168.1.180:8080/public/aaa.jpg" alt="">
+        </div>
+        <div class="button">show</div>
+
+        <div class="img-wrap">
+            <img data-lazy="http://192.168.1.180:8080/public/aaa.jpg" alt="">
+        </div>
+    </div>
+    <div class="m-con" id="abc" style="display: none;">
+
+        <div class="tt">
+            <h1>la</h1>
+            <div class="log"></div>
+            <img src="https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3363295869,2467511306&fm=26&gp=0.jpg"
+                alt="">
+        </div>
+    </div>
+    <!-- <div class="mu-con">
+        <div class="mu--overlay"></div>
+        <div class="mu-actionsheet">
+            <div class="mu-actionsheet--hd">
+                <p>这是一段描述信息</p>
+                <p>这是一段描述信息</p>
+            </div>
+            <ul>
+                <li>
+                    <span>菜单一</span>
+                    <span class="mu-actionsheet--li-desc">描述信息</span>
+                </li>
+                <li class="actionsheet--disable">菜单一</li>
+                <li>菜单一</li>
+            </ul>
+            <div class="mu-actionsheet-ft">
+                取消
+            </div>
+        </div>
+    </div> -->
+    <script src="http://wb1.planpoint.cn/acdn/zepto.min.js"></script>
+</body>
+<script>
+    console.log(111)
+    $('.button').on('click', function () {
+        // $('.aaa').removeClass('f').addClass('z').parent().show()
+        let a = new mu.Popup({
+            direction: 'bottom',
+            originDOM: '#abc',
+            round: true,
+            customClass: 'myclass',
+            forbidScroll: false
+        })
+    })
+    $('.actionsheet').on('click', function () {
+        let d = new mu.actionSheet({
+            customClass: 'myclass',
+            forbidScroll: true,
+            overlay: true,
+            title: '标题文字',
+            description: '辅助标题',
+            round: true,
+            actions: [
+                { name: '选项一', color: '#ee0a24' },
+                { name: '选项二', disabled: true },
+                { name: '选项三-3', subname: '描述信息' },
+            ],
+            actionsFun() {
+                console.log(d.actionIndex);
+                if (d.actionIndex == 0) {
+                    console.log('选项一');
+                } else if (d.actionIndex == 1) {
+                    console.log('选项二');
+                } else {
+                    new mu.Popup({
+                        direction: 'bottom',
+                        originDOM: '#abc',
+                        round: true,
+                        customClass: 'myclass',
+                        forbidScroll: false
+                    })
+                }
+            },
+        })
+    })
+
+    // let a = new mu.Notify({
+    //     content: '这是通知',
+    //     duration: 5000,
+    //     // icon: 'success',
+    //     // color: 'red',
+    //     // background: '#333333',
+    //     type: 'primary',
+    // })
+    // setTimeout(() => {
+    //     a.close()
+    // }, 2000);
+
+    // let a = new mu.LazyImages()
+
+    // let mypopup = new mu.Toast({
+    //     icon: 'fail',
+    //     customClass: 'myclass',
+    //     content: '加载中...',
+    //     // overlay:true,
+    //     duration: 0,
+    //     forbidClick: true,
+    //     before() {
+    //         console.log('这是before');
+    //     },
+    //     after() {
+    //         console.log('这是after');
+    //         let i = 1
+    //         // setInterval(() => {
+    //         //     mypopup.close()
+    //         //     $(mypopup.content).text(i++)
+    //         // }, 2000);
+    //     },
+    //     close() {
+    //         console.log('这是close');
+    //     }
+    // })
+
+    // let mypopup = new mu.Popup({
+    //     direction: 'right',
+    //     originDOM: '#abc',
+    //     // round: true,
+    //     // overlay:false,
+    //     customClass: 'myclass',
+
+    //     nav: {
+    //         close: 'right',
+    //         title: '这是正常的标题'
+    //     }
+    // })
+    // setTimeout(() => {
+    //     mypopup.close()
+    // }, 3000);
+    // console.log(a);
+    // a.close()
+
+</script>
+
+</html>

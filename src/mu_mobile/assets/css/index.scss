@@ -1,0 +1,511 @@
+// 按照40px，dpr=2的设计尺寸 
+@import './iconfont.css';
+
+$colors:('w9':rgba(255, 255, 255, 0.9),
+    'b3e':#3e4246,
+    'b4c':#4c4c4c,
+    'gc8':#c8c9cc, //disaable
+    'geb':#ebedf0,
+    'ge9':#e9e8e8,
+    'gf7':#f7f8fa,
+    'g96':#969799,
+
+
+);
+
+// 状态颜色定义
+$statuscolors:('primary':#1989fa, 'success':#07c160, 'danger':#ee0a24, 'warning':#ff976a, );
+
+@each $statusKey,
+$statusValue in $statuscolors {
+    .text-color--#{$statusKey} {
+        color: #{$statusValue};
+    }
+
+    .bg-color--#{$statusKey} {
+        background-color: #{$statusValue};
+    }
+}
+
+// 状态颜色定义 end
+
+// 字号定义
+$fontsizes:('xxxs':1rem, 'xxs':1rem, 'xs':.6rem, 'sm':.7rem, 'md':.8rem, 'lg':1rem, 'xl':1rem, 'xxl':1rem, 'xxxl':1rem);
+
+$popup-animate-time:.3s; //全局弹窗动画时长
+$mu-animate-time--disappear:.3s; //懒加载动画时长
+
+// 全局定义动画效果
+@keyframes mu-animate-disappear {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        background-color: transparent;
+        color: transparent;
+    }
+}
+
+// (toast、LazyImages、Notify已使用)
+.mu-animate-disappear {
+    animation: mu-animate-disappear $mu-animate-time--disappear linear forwards;
+}
+
+// 全局定义动画效果 end
+
+// 全局遮罩
+.mu--overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+
+    &.overlay-nth2 {
+        background-color: transparent;
+    }
+
+    &.overlay-nth3 {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+}
+
+// 定义mu-popup左右低出现动画
+@each $directionKey in (left,
+    right,
+    bottom) {
+
+    // 底部出现
+    @keyframes mu-animate--popup-bottom-z {
+        0% {
+            transform: translateY(100%);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes mu-animate--popup-bottom-f {
+        0% {
+            transform: translate3d(0, 0, 0);
+
+        }
+
+        100% {
+            transform: translate3d(0, 100%, 0);
+
+        }
+    }
+
+    // 底部出现 end
+
+    // 右侧出现 
+    @keyframes mu-animate--popup-right-z {
+        0% {
+            transform: translateX(100%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes mu-animate--popup-right-f {
+        0% {
+            transform: translate3d(0, 0, 0);
+
+        }
+
+        100% {
+            transform: translate3d(100%, 0, 0);
+
+        }
+    }
+
+    // 右侧出现 end
+
+    // 左侧出现 
+    @keyframes mu-animate--popup-left-z {
+        0% {
+            transform: translateX(-100%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes mu-animate--popup-left-f {
+        0% {
+            transform: translate3d(0, 0, 0);
+        }
+
+        100% {
+            transform: translate3d(-100%, 0, 0);
+        }
+    }
+
+    // 左侧出现 end
+
+    .mu-animate--popup-#{$directionKey}-a {
+        // animation: mu-animate--popup-#{$directionKey}-z $popup-animate-time linear;
+        animation: mu-animate--popup-#{$directionKey}-z $popup-animate-time ease-in;
+
+    }
+
+    .mu-animate--popup-#{$directionKey}-b {
+        // animation: mu-animate--popup-#{$directionKey}-f $popup-animate-time linear forwards;
+        animation: mu-animate--popup-#{$directionKey}-f $popup-animate-time ease-in forwards;
+
+    }
+}
+
+.mu-popup {
+    position: fixed;
+    max-height: 100%;
+    overflow-y: auto;
+    background-color: #fff;
+    -webkit-transition: -webkit-transform $popup-animate-time;
+    transition: -webkit-transform $popup-animate-time;
+    transition: transform $popup-animate-time;
+    transition: transform $popup-animate-time, -webkit-transform $popup-animate-time;
+    -webkit-overflow-scrolling: touch;
+    z-index: 5000;
+    box-sizing: border-box;
+    padding: 0 .3rem;
+
+    // 弹窗从底部出现
+    &.mu-popup--bottom {
+        bottom: 0;
+        left: 0;
+        width: 100%;
+
+        &.mu-popup-round {
+            border-radius: .3rem .3rem 0 0;
+        }
+    }
+
+    // 弹窗从右侧出现
+    &.mu-popup--right {
+        top: 0;
+        bottom: 0;
+        right: 0;
+
+        &.mu-popup-round {
+            border-radius: .3rem 0 0 .3rem;
+        }
+    }
+
+    // 弹窗从左侧出现
+    &.mu-popup--left {
+        top: 0;
+        bottom: 0;
+        left: 0;
+
+        &.mu-popup-round {
+            border-radius: 0 .3rem .3rem 0;
+        }
+    }
+
+    mu-nav {
+        display: block;
+        min-height: 1rem;
+        line-height: 1rem;
+        margin: .5rem 0;
+        position: relative;
+
+        .mu-iconfont {
+            font-size: .8rem;
+            position: absolute;
+            top: calc(50% - .5rem);
+            right: 3vw;
+
+            &.left {
+                right: unset;
+                left: 3vw;
+            }
+        }
+
+        .mu-popup--title {
+            text-align: center;
+            font-size: 1rem;
+            padding: 0 1.8rem;
+        }
+    }
+
+}
+
+.mu-toast {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 6rem;
+    height: 6rem;
+    padding: 1.3rem 0;
+    background-color: map-get($colors, b4c);
+    z-index: 6000;
+    color: map-get($colors, w9);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: .6rem;
+
+    &.mu-toast--text {
+        height: auto;
+        padding: .4rem .9rem;
+        text-align: center;
+        width: unset;
+        max-width: 100vw;
+    }
+
+    .mu-iconfont {
+        font-size: 1.8rem;
+        margin-bottom: .5rem;
+
+        @keyframes mu-spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        &.icon-dengdai {
+            animation: mu-spin 1s linear infinite;
+        }
+    }
+
+    span {
+        // font-size: .8rem;
+        font-size: map-get($map: $fontsizes, $key:md);
+        line-height: 1.2rem;
+
+    }
+}
+
+.mu-lazyimages {
+    background-color: map-get($map: $colors, $key: ge9);
+    border-radius: .3rem;
+    box-shadow: 0 0 .3rem rgba(0, 0, 0, 0.2);
+
+
+    &.mu-lazyimages--active {
+        @keyframes skeleton-opacity {
+            0% {
+                background-position-x: 200%;
+            }
+
+            100% {
+                background-position-x: 0;
+            }
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(100deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, .5) 50%, rgba(255, 255, 255, 0) 60%);
+            background-size: 200% 100%;
+            background-position-x: 0;
+            animation: skeleton-opacity 2s linear infinite;
+        }
+    }
+
+    i {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: map-get($map: $colors, $key: b3e);
+        z-index: 3000;
+    }
+}
+
+.mu-notify {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: .3rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: map-get($map: $fontsizes, $key: md);
+    color: #ffffff;
+    box-sizing: border-box;
+
+    .mu-iconfont {
+        font-size: .75rem;
+        margin: 0 .25rem;
+    }
+}
+
+.mu-actionsheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    color: map-get($map: $colors, $key: b3e);
+    background-color: map-get($map: $colors, $key: gf7);
+    z-index: 5000;
+    font-size: map-get($map: $fontsizes, $key: sm);
+    box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+    // 增加圆弧
+    &.mu-actionsheet--round {
+        border-radius: .8rem .8rem 0 0;
+
+    }
+
+    ul,
+    ol,
+    li {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+
+    }
+
+    // 高度决定,禁止文字选中
+    li,
+    .mu-actionsheet--hd,
+    .mu-actionsheet-ft {
+        padding: .7rem 0;
+        user-select: none;
+
+    }
+
+    li {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        &:active{
+            background-color: map-get($map: $colors, $key: gf7);
+        }
+        &.actionsheet--disable {
+            color: map-get($map: $colors, $key: gc8);
+            cursor: not-allowed;
+        }
+    }
+
+    .mu-actionsheet--hd {
+        text-align: center;
+        background-color: #ffffff;
+        position: relative;
+
+        p {
+            margin: 0;
+
+            &:nth-child(2) {
+                color: map-get($map: $colors, $key: g96);
+                font-size: map-get($map: $fontsizes, $key: xs);
+                transform: translateY(.2rem);
+            }
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 6%;
+            right: 6%;
+            height: .05rem;
+            background-color: map-get($map: $colors, $key: geb);
+        }
+
+    }
+
+    .mu-actionsheet-ft {
+        margin-top: .5rem;
+        text-align: center;
+        background-color: #ffffff;
+
+    }
+
+    .mu-actionsheet--li-desc {
+        font-size: map-get($map: $fontsizes, $key: xs);
+        color: map-get($map: $colors, $key: g96);
+        margin-top: .3rem;
+    }
+}
+
+
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+
+.indexPage {
+    width: 100%;
+    // height: 100vh;
+}
+
+.img-wrap,
+.img-2 {
+    width: 12rem;
+    height: 10rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        // width: 100%;
+        width: inherit;
+        // height: 100%;
+        height: inherit;
+    }
+}
+
+.tt {
+    width: 6rem;
+    height: 45vh;
+    // display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: scroll;
+    margin: 0 auto;
+
+    .log {
+        width: 200rem;
+        height: 100vh;
+        background-color: red;
+    }
+
+    img {
+        width: 50%;
+        height: 50%;
+    }
+}
+@keyframes animate-marquee{
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(-100%);
+
+    }
+}
+.marquee{
+    animation: animate-marquee 10s linear infinite;
+}
