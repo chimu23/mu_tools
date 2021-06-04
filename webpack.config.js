@@ -1,30 +1,21 @@
-/*
- * @Author: your name
- * @Date: 2020-12-04 16:00:16
- * @LastEditTime: 2021-01-20 10:02:37
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \mu\webpack.config.js
- */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // let BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
 module.exports = {
-  mode: 'production',
-  // mode: 'development',
+  // mode: 'production',
+  mode: 'development',
   entry: {
     mu: './src/mu/index.js',
     mu_mobile: './src/mu_mobile/index.js',
   },
   output: {
     filename: '[name].js',
-    // filename: 'mu.js',
-    path: path.resolve(__dirname, 'dist'),
+    // path: path.join(__dirname, '/dist'),  //join 路径只是简单拼接  resolve 处理后会返回绝对路径  如遇到/a  /b  则 /b覆盖 /a  https://blog.csdn.net/u010238381/article/details/80498646
+    path: path.resolve('./dist'),
     library: 'mu',
     libraryTarget: 'umd',
     libraryExport: 'default',
-    // publicPath: '/dist/'
+    publicPath: 'www.baidu.com/', //配置公共路径 ./a.jpg => www.baidu.com/a.jpg
   },
   devServer: {
     contentBase: '/dist',
@@ -34,12 +25,12 @@ module.exports = {
     // new BundleAnalyzerPlugin(),
     new HtmlWebpackPlugin({
       template: './src/mu/index.html',
-      filename: '/mu/index.html',
+      filename: 'mu/index.html',
       chunks: ['mu'],
     }),
     new HtmlWebpackPlugin({
       template: './src/mu_mobile/index.html',
-      filename: '/mu_mobile/index.html',
+      filename: 'mu_mobile/index.html',
       chunks: ['mu_mobile'],
       minify: {
         removeComments: true, //去除注释
